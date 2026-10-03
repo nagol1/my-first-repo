@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logan's First GitHub Project | nagol1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --card-border: #30363d;
+      --text-main: #f0f6fc;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-purple: #bc8cff;
+      --terminal-bg: #030712;
+      --code-font: 'Fira Code', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: rgba(22, 27, 34, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    .brand svg {
+      fill: var(--text-main);
+    }
+
+    .gh-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #21262d;
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .gh-btn:hover {
+      background: #30363d;
+      border-color: #8b949e;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.85rem;
+      background: rgba(88, 166, 255, 0.12);
+      border: 1px solid rgba(88, 166, 255, 0.3);
+      border-radius: 20px;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #f0f6fc 30%, #58a6ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 850px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Live profile info */
+    .profile-box {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      object-fit: cover;
+    }
+
+    .profile-details h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .profile-handle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-family: var(--code-font);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      text-align: center;
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.75rem 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Commits list */
+    .commit-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 0.35rem;
+    }
+
+    .commit-item {
+      background: #0d1117;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.85rem;
+      font-size: 0.88rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .commit-msg {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .commit-meta {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-family: var(--code-font);
+    }
+
+    .sha-tag {
+      background: #21262d;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      color: var(--accent-purple);
+    }
+
+    /* Interactive Terminal Simulator */
+    .terminal-card {
+      background: var(--terminal-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+    }
+
+    .terminal-header {
+      background: #111827;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1f2937;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 0.45rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot.red { background: #ef4444; }
+    .dot.yellow { background: #f59e0b; }
+    .dot.green { background: #10b981; }
+
+    .terminal-title {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      font-family: var(--code-font);
+    }
+
+    .terminal-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.85rem 1rem;
+      background: #0b1120;
+      border-bottom: 1px solid #1f2937;
+    }
+
+    .cmd-chip {
+      background: #1e293b;
+      color: #38bdf8;
+      border: 1px solid #334155;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-family: var(--code-font);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .cmd-chip:hover {
+      background: #0284c7;
+      color: #fff;
+      border-color: #38bdf8;
+    }
+
+    .terminal-body {
+      padding: 1.25rem;
+      font-family: var(--code-font);
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      min-height: 200px;
+      max-height: 320px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    .prompt-line {
+      color: #4ade80;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--card-border);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <svg height="24" viewBox="0 0 16 16" width="24"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg>
+        <span>my-first-repo</span>
+      </a>
+      <a href="https://github.com/nagol1/my-first-repo" target="_blank" class="gh-btn">
+        View on GitHub ↗
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="badge">
+        <span class="badge-dot"></span> Powered by Git, GitHub & Antigravity
+      </div>
+      <h1>Connected & Live on GitHub</h1>
+      <p class="subtitle">This webpage is connected to your repository <code style="color: var(--accent);">nagol1/my-first-repo</code> using GitHub's live API and GitHub CLI (gh).</p>
+    </section>
+
+    <!-- Two-column dashboard -->
+    <div class="grid-2">
+      <!-- Profile Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">👤 GitHub Account</div>
+          <span style="color: var(--accent-green); font-size: 0.85rem; font-weight: 600;">Authenticated</span>
+        </div>
+        <div class="profile-box">
+          <img id="avatar" class="avatar" src="https://avatars.githubusercontent.com/u/34401453?v=4" alt="nagol1" />
+          <div class="profile-details">
+            <h3 id="profileName">nagol1</h3>
+            <div class="profile-handle">@nagol1</div>
+            <div id="profileBio" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">GitHub User</div>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-pill">
+            <div class="stat-value" id="repoCount">-</div>
+            <div class="stat-label">Public Repos</div>
+          </div>
+          <div class="stat-pill">
+            <div class="stat-value" id="followersCount">-</div>
+            <div class="stat-label">Followers</div>
+          </div>
+          <div class="stat-pill">
+            <div class="stat-value" id="followingCount">-</div>
+            <div class="stat-label">Following</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Commits Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📜 Live Commits (my-first-repo)</div>
+          <span id="commitCount" style="color: var(--accent); font-size: 0.85rem; font-family: var(--code-font);">-</span>
+        </div>
+        <div id="commitList" class="commit-list">
+          <div style="color: var(--text-muted); font-size: 0.85rem;">Fetching recent commits from GitHub...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Terminal Playground -->
+    <div class="terminal-card">
+      <div class="terminal-header">
+        <div class="window-dots">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="terminal-title">PowerShell &mdash; gh / git simulator</div>
+        <div style="color: #6b7280; font-size: 0.75rem;">Interactive</div>
+      </div>
+
+      <div class="terminal-controls">
+        <span style="color: #94a3b8; font-size: 0.82rem; align-self: center; margin-right: 0.25rem;">Try commands:</span>
+        <button class="cmd-chip" onclick="runSim('gh auth status')">gh auth status</button>
+        <button class="cmd-chip" onclick="runSim('gh repo view')">gh repo view</button>
+        <button class="cmd-chip" onclick="runSim('git status')">git status</button>
+        <button class="cmd-chip" onclick="runSim('git log --oneline')">git log --oneline</button>
+        <button class="cmd-chip" onclick="runSim('gh pr list')">gh pr list</button>
+        <button class="cmd-chip" onclick="clearTerm()">clear</button>
+      </div>
+
+      <div class="terminal-body" id="termOutput">PS C:\Users\logan\my-first-repo> gh auth status
+github.com
+  ✓ Logged in to github.com account nagol1 (keyring)
+  - Active account: true
+  - Git operations protocol: https
+  - Token scopes: 'gist', 'read:org', 'repo'
+
+PS C:\Users\logan\my-first-repo> <span style="animation: blink 1s infinite;">_</span></div>
+    </div>
+  </main>
+
+  <footer>
+    Made for <strong>nagol1</strong> &bull; Connected with Git and GitHub CLI
+  </footer>
+
+  <script>
+    // Fetch live data from GitHub API
+    async function fetchGitHubData() {
+      try {
+        // User profile
+        const userRes = await fetch('https://api.github.com/users/nagol1');
+        if (userRes.ok) {
+          const user = await userRes.json();
+          document.getElementById('avatar').src = user.avatar_url;
+          document.getElementById('profileName').textContent = user.name || user.login;
+          if (user.bio) document.getElementById('profileBio').textContent = user.bio;
+          document.getElementById('repoCount').textContent = user.public_repos;
+          document.getElementById('followersCount').textContent = user.followers;
+          document.getElementById('followingCount').textContent = user.following;
+        }
+
+        // Repo commits
+        const commitsRes = await fetch('https://api.github.com/repos/nagol1/my-first-repo/commits');
+        if (commitsRes.ok) {
+          const commits = await commitsRes.json();
+          const listEl = document.getElementById('commitList');
+          listEl.innerHTML = '';
+          document.getElementById('commitCount').textContent = `${commits.length} commits`;
+
+          commits.forEach(c => {
+            const item = document.createElement('div');
+            item.className = 'commit-item';
+            const shortSha = c.sha.substring(0, 7);
+            const dateStr = new Date(c.commit.author.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            item.innerHTML = `
+              <div class="commit-msg">${escapeHtml(c.commit.message)}</div>
+              <div class="commit-meta">
+                <span>By ${escapeHtml(c.commit.author.name)} &bull; ${dateStr}</span>
+                <span class="sha-tag">${shortSha}</span>
+              </div>
+            `;
+            listEl.appendChild(item);
+          });
+        }
+      } catch (e) {
+        console.error('Error fetching GitHub data:', e);
+      }
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Terminal Simulator
+    const termEl = document.getElementById('termOutput');
+    const outputs = {
+      'gh auth status': `github.com\n  ✓ Logged in to github.com account nagol1 (keyring)\n  - Active account: true\n  - Git operations protocol: https\n  - Token scopes: 'gist', 'read:org', 'repo'`,
+      'gh repo view': `nagol1/my-first-repo\nMy first repository created with Git, GitHub, and Antigravity.\n\nView this repository on GitHub: https://github.com/nagol1/my-first-repo`,
+      'git status': `On branch main\nYour branch is up to date with 'origin/main'.\n\nnothing to commit, working tree clean`,
+      'git log --oneline': `fb1ce77 (HEAD -> main, origin/main) Add hello.py script\ncde3867 My first commit: added README`,
+      'gh pr list': `No open pull requests in nagol1/my-first-repo`
+    };
+
+    function runSim(cmd) {
+      const prompt = `\n\nPS C:\\Users\\logan\\my-first-repo> ${cmd}\n`;
+      const response = outputs[cmd] || 'Command recognized.';
+      termEl.textContent = termEl.textContent.trimEnd() + prompt + response + '\n\nPS C:\\Users\\logan\\my-first-repo> ';
+      termEl.scrollTop = termEl.scrollHeight;
+    }
+
+    function clearTerm() {
+      termEl.textContent = 'PS C:\\Users\\logan\\my-first-repo> ';
+    }
+
+    fetchGitHubData();
+  </script>
+</body>
+</html>
